@@ -24,6 +24,38 @@ class CartsManager{
         }
         return cart.save();
     }
+
+    async updateProductInCart(idCart, idProduct, quantity) {
+      const cart = await cartsManager.findCartById(idCart);
+      if (!cart) {
+        throw new Error("Cart not found");
+      }
+      const productIndex = cart.products.findIndex(
+        (p) => p.product.equals(idProduct)
+      );
+      if (productIndex === -1) {
+        throw new Error("Product not found in the cart");
+      }
+      cart.products[productIndex].quantity = quantity;
+      await cart.save();
+      return cart;
+    }
+
+    async deleteProductInCart(idCart, idProduct){
+      const cart = await cartsModel.findById(idCart);
+      if (!cart) {
+        throw new Error("Cart not found");
+      }      
+      const productIndex = cart.products.findIndex(
+        (p) => p.product.equals(idProduct)
+      );
+      if (productIndex === -1) {
+        throw new Error("Product not found in the cart");
+      }
+      cart.products.splice(productIndex, 1);
+      return cart.save();
+    }
+
     async getCarts() {
         const carts = await cartsModel.find();
         return carts;

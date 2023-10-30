@@ -25,7 +25,7 @@ app.set("view engine", "handlebars");
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/users", usersRouter);
-app.use("/chat", messageRouter); // Utiliza el enrutador de mensajes
+app.use("/chat", messageRouter);
 app.use("/", viewsRouter);
 
 app.listen(8080, () => {

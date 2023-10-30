@@ -4,9 +4,10 @@ const router = Router();
 
 router.get("/", async (req, res) => {
   try {
+    //const products = await productsManager.findAggregation (req.query);
     const products = await productsManager.findAll();
     if (!products.length) {
-      return res.status(200).json({ message: "No products" });
+      return res.status(200).json({ message: "No products found" });
     }
     res.status(200).json({ message: "Products found", products });
   } catch (error) {

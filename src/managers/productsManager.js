@@ -2,7 +2,26 @@ import {productsModel} from "../db/models/products.model.js"
 
 class ProductsManager {
     async findAggregation (){
-        const result = await productsModel.aggregate()
+        /*
+        const result = await productsModel.aggregate([
+            {$match :{
+                $and: [{stock: {$gt: 2}}, {stock:{$lt:8}}],
+                },
+            },
+            {$sort: { price: -1}},
+        ]);
+        */
+        const {limit = 10, page = 1, ...filter} = obj
+        const result = await productsModel.paginate(
+            filter, {limit ,page}
+        );
+        const info = {
+            count: result.totalDocs,
+            pages: result.totalPages,
+            next: result.hasNextPage ? `http://localhost:8080/api/products?page=${result.nextPage}` : null,
+            preview: result.hasPrevPage ? `http://localhost:8080/api/products?page=${result.prevPage}` : null,
+        };
+
         return result;
     }
 
