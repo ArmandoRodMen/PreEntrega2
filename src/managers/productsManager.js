@@ -1,28 +1,48 @@
 import {productsModel} from "../db/models/products.model.js"
 
 class ProductsManager {
-    async findAggregation (){
-        /*
-        const result = await productsModel.aggregate([
-            {$match :{
-                $and: [{stock: {$gt: 2}}, {stock:{$lt:8}}],
-                },
-            },
-            {$sort: { price: -1}},
-        ]);
-        */
-        const {limit = 10, page = 1, ...filter} = obj
-        const result = await productsModel.paginate(
-            filter, {limit ,page}
-        );
+
+    async findAggregation(obj){
+        const {limit = 10, page = 1, sortBy = 'price', sortOrder = 'asc', ...filter} = obj;
+        const sortDirection = sortOrder === 'asc' ? 1 : -1;
+        const sortOptions = {
+            [sortBy]: sortDirection
+        };
+        const result = await productsModel.paginate(filter, {limit, page, sort: sortOptions});
         const info = {
             count: result.totalDocs,
             pages: result.totalPages,
             next: result.hasNextPage ? `http://localhost:8080/api/products?page=${result.nextPage}` : null,
             preview: result.hasPrevPage ? `http://localhost:8080/api/products?page=${result.prevPage}` : null,
         };
+        const response = result.docs;
+        return {info, response};
+    }
+
+    /*
+    async findAggregation(){
+        
+        const result = await productsModel.aggregate([
+            {$match :{
+                $and: [
+                    {stock: {$gt: 0}}, 
+                    {stock:{$lt:9}},
+                    {statues: true }
+                ],
+                },
+            },
+            
+            {
+                $group:{
+                    _id: "$category",
+                },
+            },
+            
+            {$sort: { price: -1}},
+        ]);
         return result;
     }
+    */
 
     async findAll(){
         const result = await productsModel.find().lean();

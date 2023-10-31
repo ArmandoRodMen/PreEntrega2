@@ -29,7 +29,7 @@ const productsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    status:{
+    statues:{
         type: Boolean,
         default: true,
         required: true

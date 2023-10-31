@@ -2,14 +2,12 @@
 
 {{#each products}}
 <div>
-
-    <!--
-    <h3>{{this.product.title}}</h3>
-    <p>Descripción: {{this.product.description}}</p>
-    <p>Precio: {{this.product.price}}</p>
-    <p>Stock: {{this.product.stock}}</p>
-    <p>Categoría: {{this.product.category}}</p>
-    <img src="{{this.product.thumbnail}}" width="100" alt="{{this.product.description}}">-->
+    <h3>{{product.title}}</h3>
+    <p>Descripción: {{product.description}}</p>
+    <p>Precio: {{product.price}}</p>
+    <p>Stock: {{product.stock}}</p>
+    <p>Categoría: {{product.category}}</p>
+    <img src="{{product.thumbnail}}" width="100" alt="{{product.description}}">
     <p>Cantidad: {{quantity}}</p>
 </div>
 {{/each}}
