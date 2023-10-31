@@ -1,25 +1,15 @@
-<h4>Los productos del carrito {{cartID}} son: :O</h4>
+<h2>Los productos del carrito {{idCart}} son:</h2>
 
 {{#each products}}
 <div>
-    <h3>{{name}}</h3>
-    <p>Descripción: {{description}}</p>
-    <p>Precio: {{price}}</p>
-    <p>Stock: {{stock}}</p>
-    <img src="{{thumbnail}}" alt="{{description}}">
-</div>
-{{/each}}
 
-<!--
-{{#each products}}
-<div>
-    <h3>{{product.title}}</h3>
-    <p>Descripción: {{product.description}}</p>
-    <p>Precio: {{product.price}}</p>
-    <img src="{{product.thumbnail}}" alt="{{product.description}}">
-    <p>Code: {{product.code}}</p>
-    <p>Stock: {{product.stock}}</p>
-    <p>Quantity: {{quantity}}</p>
+    <!--
+    <h3>{{this.product.title}}</h3>
+    <p>Descripción: {{this.product.description}}</p>
+    <p>Precio: {{this.product.price}}</p>
+    <p>Stock: {{this.product.stock}}</p>
+    <p>Categoría: {{this.product.category}}</p>
+    <img src="{{this.product.thumbnail}}" width="100" alt="{{this.product.description}}">-->
+    <p>Cantidad: {{quantity}}</p>
 </div>
 {{/each}}
--->

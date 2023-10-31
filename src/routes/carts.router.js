@@ -20,8 +20,8 @@ router.delete("/:idCart", async (req, res) => {
   if ( !idCart ) {
     res.status(400).json({ message: "No cart found with that id" });
   }try {
-    await cartsManager.deleteCart(idCart);
-    res.status(200).json({ message: "Cart deleted" });
+    await cartsManager.deleteProductsInCart(idCart);
+    res.status(200).json({ message: "Products in the cart deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -44,20 +44,25 @@ router.delete("/:idCart/products/:idProduct", async (req, res) => {
 router.put("/:idCart/products/:idProduct", async (req, res) => {
   const { idCart, idProduct } = req.params;
   const quantity = req.body.quantity;
-  console.log("\n//////////////////\n idCart es:",idCart,"\n//////////////////\n idProduct es:",idProduct,"\n//////////////////\n req.params es:",req.params,"\n//////////////////\n quantity es:",quantity);
-
-    try {
-      const cart = await cartsManager.updateProductInCart(idCart, idProduct, quantity);
-      res.status(200).json({ message: "Product updated" });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  
+  try {
+    const cart = await cartsManager.updateProductInCart(idCart, idProduct, quantity);
+    res.status(200).json({ message: "Product updated" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
-/*
-put /:idCart
-*/
+router.put("/:idCart", async (req, res)=>{
+  try{
+    const {idCart} = req.params
+    const {products} = req.body;
+    const response = await cartsManager.updateAllProducts(idCart, products)
+    res.status(200).json({message: "Products updated", cart: response})
+  }catch(error){
+    res.status(500).json({messsage: error.message});
+  }
+});
+
 router.post("/:idCart/products/:idProduct", async (req, res) => {
   const { idCart, idProduct } = req.params;
   if (!idCart || !idProduct) {
@@ -71,7 +76,6 @@ router.post("/:idCart/products/:idProduct", async (req, res) => {
     }
   }
 });
-
 
 router.get("/", async (req, res) => {
   try {

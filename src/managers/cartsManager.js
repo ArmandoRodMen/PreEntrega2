@@ -25,6 +25,18 @@ class CartsManager{
         return cart.save();
     }
 
+    async findProductsInCart(idCart){
+      const cart = await cartsManager.findCartById(idCart);
+      if (!cart) {
+        throw new Error("Cart not found");
+      }
+      const productsInCart = cart.products.map((productInfo) => ({
+        product: productInfo.product,
+        quantity: productInfo.quantity,
+      }));
+      return productsInCart;
+    }
+
     async updateProductInCart(idCart, idProduct, quantity) {
       const cart = await cartsManager.findCartById(idCart);
       if (!cart) {
@@ -54,6 +66,23 @@ class CartsManager{
       }
       cart.products.splice(productIndex, 1);
       return cart.save();
+    }
+
+    async deleteProductsInCart(idCart){
+      const cart = await cartsModel.findById(idCart);
+      if (!cart) {
+        throw new Error("Cart not found");
+      }
+      cart.products = [];
+      await cart.save();
+    }
+
+    async updateAllProducts(idCart, products){
+      const cart = await cartsModel.findById(idCart);
+      const newProducts = products;
+      cart.products = newProducts;
+      await cart.save();
+      return cart
     }
 
     async getCarts() {

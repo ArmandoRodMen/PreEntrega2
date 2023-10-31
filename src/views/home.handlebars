@@ -7,13 +7,15 @@
     <input type="submit" value="SEND">
 </form>
 
-<h4>Productos disponibles</h4>
+<h4>Los Productos disponibles</h4>
 {{#each products}}
 <div>
-    <h3>{{name}}</h3>
+    <h3>{{title}}</h3>
     <p>Descripción: {{description}}</p>
     <p>Precio: {{price}}</p>
     <p>Stock: {{stock}}</p>
-    <img src="{{thumbnail}}" alt="{{description}}">
+    <p>Category: {{category}}</p>
+    <img src="{{thumbnail}}"  width="100" alt="{{description}}">
+    <button>Agregar a carrito</button>
 </div>
 {{/each}}

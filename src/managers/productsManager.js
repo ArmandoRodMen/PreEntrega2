@@ -21,7 +21,6 @@ class ProductsManager {
             next: result.hasNextPage ? `http://localhost:8080/api/products?page=${result.nextPage}` : null,
             preview: result.hasPrevPage ? `http://localhost:8080/api/products?page=${result.prevPage}` : null,
         };
-
         return result;
     }
 

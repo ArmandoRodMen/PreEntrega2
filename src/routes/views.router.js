@@ -29,12 +29,11 @@ router.get("/products", async (req, res) => {
   res.render("products", {products});
 });
 
-router.get("/cart/:cartID", async (req, res) => {
-  const { cartID } = req.params;
-  const cart = await cartsManager.findCartById(cartID);
-  const products = cart.products; 
-  console.log(products)
-  res.render("cart", { cartID, products });
+router.get("/cart/:idCart", async (req, res) => {
+  const { idCart } = req.params;
+  const products = await cartsManager.findProductsInCart(idCart);
+  console.log("\n/////////////\n",products,"\n/////////////\n");
+  res.render("cart",{idCart, products});
 });
 
 export default router;
