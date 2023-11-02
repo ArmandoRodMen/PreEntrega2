@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { productsManager } from "../managers/productsManager.js";
+import { productsManager } from "../DAO/mongodb/managers/productsManager.js";
 const router = Router();
 
 router.get("/", async (req, res) => {

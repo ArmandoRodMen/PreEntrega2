@@ -1,5 +1,5 @@
 import { response } from "express";
-import {productsModel} from "../db/models/products.model.js"
+import {productsModel} from "../models/products.model.js"
 
 class ProductsManager {
 

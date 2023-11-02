@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { messagesManager } from "../managers/messagesManager.js";
-import { usersManager } from "../managers/usersManager.js";
-import { productsManager } from "../managers/productsManager.js";
-import { cartsManager } from "../managers/cartsManager.js";
+import { messagesManager } from "../DAO/mongodb/managers/messagesManager.js";
+import { usersManager } from "../DAO/mongodb/managers/usersManager.js";
+import { productsManager } from "../DAO/mongodb/managers/productsManager.js";
+import { cartsManager } from "../DAO/mongodb/managers/cartsManager.js";
 
 const router = Router();
 
