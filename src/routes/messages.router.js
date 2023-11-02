@@ -3,17 +3,15 @@ import { messagesManager } from "../managers/messagesManager.js";
 
 const router = Router();
 
-// Ruta para mostrar los mensajes en una vista de Handlebars
 router.get("/", async (req, res) => {
     try {
         const messages = await messagesManager.findAll();
-        res.render('chat', { messages }); // Renderiza la plantilla Handlebars con los mensajes
+        res.render('chat', { messages });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// Ruta para agregar un nuevo mensaje
 router.post("/", async (req, res) => {
     const { username, message } = req.body;
     if ( !message) {

@@ -30,10 +30,7 @@ class CartsManager{
       if (!cart) {
         throw new Error("Cart not found");
       }
-      const productsInCart = cart.products.map((productInfo) => ({
-        product: productInfo.product,
-        quantity: productInfo.quantity,
-      }));
+      const productsInCart = cart.products.map(doc => doc.toObject());
       return productsInCart;
     }
 

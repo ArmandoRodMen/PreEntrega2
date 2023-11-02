@@ -25,15 +25,14 @@ router.get("/chat", async (req, res) => {
 });
 
 router.get("/products", async (req, res) => {
-  const products = await productsManager.findAll();
-  res.render("products", {products});
+  const products = await productsManager.findAggregation(req.query);
+  res.render("products", { products: products });
 });
 
 router.get("/cart/:idCart", async (req, res) => {
-  const { idCart } = req.params;
-  const products = await cartsManager.findProductsInCart(idCart);
-  console.log("\n/////////////\n",products,"\n/////////////\n");
-  res.render("cart",{idCart, products});
+  const {idCart} = req.params;
+  const cartProducts = await cartsManager.findProductsInCart(idCart);
+  res.render("cart", {idCart, products:cartProducts} );
 });
 
 export default router;

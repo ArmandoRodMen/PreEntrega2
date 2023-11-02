@@ -1,23 +1,42 @@
+import { response } from "express";
 import {productsModel} from "../db/models/products.model.js"
 
 class ProductsManager {
 
-    async findAggregation(obj){
-        const {limit = 10, page = 1, sortBy = 'price', sortOrder = 'asc', ...filter} = obj;
+    async findAggregation(obj) {
+        const { limit = 10, page = 1, sortBy = 'price', sortOrder = 'asc', ...filter } = obj;
         const sortDirection = sortOrder === 'asc' ? 1 : -1;
         const sortOptions = {
             [sortBy]: sortDirection
         };
-        const result = await productsModel.paginate(filter, {limit, page, sort: sortOptions});
+        
+        try {
+        const response = await productsModel.paginate(filter, { limit, page, sort: sortOptions });
         const info = {
-            count: result.totalDocs,
-            pages: result.totalPages,
-            next: result.hasNextPage ? `http://localhost:8080/api/products?page=${result.nextPage}` : null,
-            preview: result.hasPrevPage ? `http://localhost:8080/api/products?page=${result.prevPage}` : null,
+            status: "success", 
+            payload: response.totalDocs,
+            totalPages: response.totalPages,
+            prevPage: response.prevPage ? response.prevPage : null,
+            nextPage: response.nextPage ? response.nextPage : null,
+            page: response.page,
+            hasPrevPage: response.hasPrevPage ? response.hasPrevPage : null,
+            hasNextPage: response.hasNextPage ? response.hasNextPage : null,
+            prevLink: response.hasPrevPage ? `http://localhost:8080/api/products?page=${response.prevPage}` : null,
+            nextLink: response.hasNextPage ? `http://localhost:8080/api/products?page=${response.nextPage}` : null,
         };
-        const response = result.docs;
-        return {info, response};
+        console.log(info);
+        const result = response.docs.map(doc => ({ product: doc.toObject() }));
+        return result;
+        } catch (error) {
+        const info = {
+            status: "error",
+            message: "Ha ocurrido un error en la búsqueda de productos.",
+        };
+            console.error(error);
+            return { result: [] };
+        }
     }
+
 
     /*
     async findAggregation(){
